@@ -1,0 +1,45 @@
+{
+  "name": "@bitair/linker.c",
+  "version": "0.5.0",
+  "description": "C dynamic library linker",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "scripts": {
+    "clean": "sh scripts/clean.sh",
+    "build": "npx node-gyp build --release",
+    "build:dev": "npx node-gyp build --debug",
+    "build:test": "sh scripts/build_test.sh",
+    "test": "node ./test/index.js",
+    "preinstall": "sh scripts/preinstall.sh",
+    "postinstall": "sh scripts/postinstall.sh"
+  },
+  "keywords": [
+    "ffi",
+    "c",
+    "cpp",
+    "rust",
+    "go",
+    "shared-library",
+    "foreign-function-interface",
+    "node-addon"
+  ],
+  "dependencies": {
+    "bindings": "~1.2.1",
+    "node-addon-api": "^6.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.39.0",
+    "node-gyp": "^9.3.1",
+    "prettier": "^2.8.8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bitair-org/linker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bitair-org/linker/issues"
+  },
+  "homepage": "https://github.com/bitair-org/linker#readme",
+  "license": "MIT",
+  "gypfile": true
+}

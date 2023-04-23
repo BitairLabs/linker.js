@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "clean": "sh scripts/clean.sh && pnpm -r --filter=./**/* clean",
+    "format": "prettier --write '**/*.{js,ts,tsx,md,yaml}'",
+    "lint": "npx eslint .; pnpm -r --filter=./**/* lint",
+    "build": "pnpm -r --filter=./**/* build",
+    "test": "pnpm -r --filter=./**/* test"
+  },
+  "devDependencies": {
+    "eslint": "^8.39.0",
+    "prettier": "^2.8.8",
+    "eslint-config-prettier": "^8.6.0"
+  }
+}
