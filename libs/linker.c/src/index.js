@@ -40,7 +40,7 @@ function getValueType(value) {
       return ArgType.String
     default:
       if (valueType === 'object' && value instanceof ArrayBuffer) return ArgType.ArrayBuffer
-      else throw new Error(`Value type ${valueType} is not supported`)
+      else throw new Error(`Argument type ${valueType} is not supported`)
   }
 }
 
