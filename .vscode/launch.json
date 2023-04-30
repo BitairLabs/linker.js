@@ -1,17 +1,21 @@
 {
-  // Use IntelliSense to learn about possible attributes.
-  // Hover to view descriptions of existing attributes.
-  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
     {
       "type": "cppdbg",
-      "cwd": ".",
+      "cwd": "${workspaceFolder}",
       "program": "/usr/bin/node",
       "request": "launch",
-      "name": "Debug Test",
-      "preLaunchTask": "npm: build:dev",
-      "args": ["${workspaceFolder}/test/index.js"],
+      "name": "Debug LinkerC",
+      "args": ["test/c_linker/index.js"],
+    },
+    {
+      "type": "cppdbg",
+      "cwd": "${workspaceFolder}",
+      "program": "/usr/bin/node",
+      "request": "launch",
+      "name": "Debug LinkerPy",
+      "args": ["test/py_linker/index.js"],
     }
   ]
 }

@@ -1,14 +1,45 @@
 {
+  "name": "@bitair/linker.js",
+  "version": "0.6.0",
+  "description": "Dynamic foreign library linker",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
   "scripts": {
-    "clean": "sh scripts/clean.sh && pnpm -r --filter=./**/* clean",
+    "clean": "sh scripts/clean.sh",
     "format": "prettier --write '**/*.{js,ts,tsx,md,yaml}'",
     "lint": "npx eslint .; pnpm -r --filter=./**/* lint",
-    "build": "pnpm -r --filter=./**/* build",
-    "test": "pnpm -r --filter=./**/* test"
+    "build:c": "sh scripts/build.sh c_linker",
+    "build:c:dev": "sh scripts/build.sh c_linker --debug",
+    "build:py": "sh scripts/build.sh py_linker",
+    "build:py:dev": "sh scripts/build.sh py_linker --debug",
+    "build": "npm run build:c && npm run build:py",
+    "test:c": "sh scripts/build_test.sh && node ./test/c_linker/index.js",
+    "test:py": "node ./test/py_linker/index.js",
+    "test": "npm run test:c && npm run test:py"
+  },
+  "bin": {
+    "linker.js": "./scripts/install.sh"
+  },
+  "keywords": [
+    "ffi"
+  ],
+  "dependencies": {
+    "bindings": "~1.2.1",
+    "node-addon-api": "^6.0.0"
   },
   "devDependencies": {
+    "cmake-js": "^7.2.1",
     "eslint": "^8.39.0",
     "prettier": "^2.8.8",
     "eslint-config-prettier": "^8.6.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bitair-org/linker.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bitair-org/linker.js/issues"
+  },
+  "homepage": "https://github.com/bitair-org/linker.js#readme",
+  "license": "MIT"
 }
