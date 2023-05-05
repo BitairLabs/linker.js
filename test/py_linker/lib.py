@@ -1,3 +1,6 @@
+import time
+import asyncio
+import numpy as np
 from array import array
 
 
@@ -26,33 +29,28 @@ def str_join(s1, s2):
 
 
 def get_max(buf):
-    nums = array("h") 
+    nums = array("h")
     # The buf is a Uint8 array and we need to view it as a Uint16 array
-    # The 'h' type code means viewing the buf as Uint16 values
-    # Learn about type codes here https://docs.python.org/3/library/array.html#module-array
+    # The 'h' type code means viewing the buf as a Uint16 array
+    # Learn about the type codes here https://docs.python.org/3/library/array.html#module-array
     nums.frombytes(buf)
     max = 0
-    for i in nums:
-        if i > max:
-            max = i
+    for x in nums:
+        if x > max:
+            max = x
     return float(max)
 
 
 def get_min(buf):
-    # We don't need to use the array function because the data has been passed a Uint8 array
-    min = buf[0]
-    for i in buf:
-        if i < min:
-            min = i
-    return float(min)
-
+    # We don't need to use the array function because the data has been passed as a Uint8 array
+    return float(np.min(buf))
 
 def prime_numbers(n):
     result = array("h")
     for num in range(0, int(n)):
         if is_prime(num):
-            result.append(num)    
-    return memoryview(result)
+            result.append(num)
+    return memoryview(result.tobytes())
 
 
 def is_prime(a):
@@ -62,3 +60,17 @@ def is_prime(a):
                 return False
         return True
     return False
+
+
+async def sleep():
+    time.sleep(0.1)
+
+def sum(buf):
+    return asyncio.run(sum_async(buf))
+
+async def sum_async(buf):
+    total = 0
+    for num in buf:
+        await sleep()
+        total += num
+    return float(total)

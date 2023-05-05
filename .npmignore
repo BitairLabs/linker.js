@@ -1,3 +1,4 @@
+.vscode
 build
 .venv
 __pycache__

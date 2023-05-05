@@ -9,15 +9,15 @@ Linker.js is a foreign function interface for Node.js. Linker.js is part of [Con
 - Language support
   - [x] C, C++, Go, Rust or any language that can produce C-shared libraries (via [C Linker](#c-linker))
   - [ ] Java
-  - [x] Python (via [Py Linker](#py-linker))
+  - [x] Python (via [Python Linker](#python-linker))
   - [ ] Ruby
 
 # Technical facts
-  - Build upon the [Node-API](https://nodejs.org/api/n-api.html), [libffi](https://github.com/libffi/libffi) and [Python C-API](https://docs.python.org/3/c-api) libraries
-  - Supports zero-copy data passing through buffers
-  - Automatically collects the buffers memories
-  - Has a minimal API
 
+- Build upon the [Node-API](https://nodejs.org/api/n-api.html), [libffi](https://github.com/libffi/libffi) and [Python C-API](https://docs.python.org/3/c-api) libraries
+- Supports zero-copy data passing through buffers
+- Automatically collects the buffers memories
+- Has a minimal API
 
 ### Install
 
@@ -27,9 +27,9 @@ npm i -D cmake-js
 npm i @bitair/linker.js
 ```
 
-# C Linker
+# C linker
 
-C Linker provides the interface for accessing any C-shared libraries. Accessing C, C++, Go, and Rust libraries has been covered in the usage section.
+C linker provides the interface for accessing any C-shared libraries. Accessing C, C++, Go, and Rust libraries has been covered in the usage section.
 
 ## Usage
 
@@ -160,9 +160,9 @@ cargo build
 
 Please see the [test folder](./test/c_linker) for a complete sample code.
 
+# Python linker
 
-# Py Linker
-Py Linker provides the interface for accessing python libraries.
+Python linker provides the interface for accessing python libraries.
 
 ## Usage
 
@@ -217,42 +217,44 @@ Links to a shared library and returns a proxy for accessing its functions.
 
   Signatures of the foreign functions. Note that the types of a function parameters will be inferred at the call time from the passing arguments.
 
+  ```ts
+  type SignatureDict = {
+    [key: string]: ReturnType
+  }
+  ```
+
+  - `key: string`
+
+    Name of the foreign function.
+
+  - `ReturnType`
+
+    Type of the return value.
+
     ```ts
-    type SignatureDict = {
-      [key: string]: ReturnType
+    enum ReturnType {
+      ArrayBuffer,
+      Boolean,
+      Number,
+      String
     }
     ```
 
-    - `key: string`
+- `Proxy`
 
-      Name of the foreign function.
-
-    - `ReturnType`
-
-      Type of the return value.
-      ```ts
-      enum ReturnType {
-        ArrayBuffer,
-        Boolean,
-        Number,
-        String
-      }
-      ```
-
-- `Proxy`  
   ```ts
   type Proxy = {
     [key: string]: (...params: unknown[]) => unknown
   }
   ```
 
-    - `key: string`
+  - `key: string`
 
-      Name of the foreign function.
+    Name of the foreign function.
 
-    - `(...params:unknown[]) => unknown`
+  - `(...params:unknown[]) => unknown`
 
-      The function's invoker.
+    The function's invoker.
 
 ## Type mapping
 
@@ -261,7 +263,7 @@ Links to a shared library and returns a proxy for accessing its functions.
 | ArrayBuffer    | struct Buffer | memoryview |
 | boolean        | bool          | bool       |
 | number         | double        | float      |
-| string (UTF-8) | char *        | str        |
+| string (UTF-8) | char \*       | str        |
 
 ```c
 typedef struct {
@@ -271,9 +273,10 @@ typedef struct {
 ```
 
 Notes:
-  - Strings, booleans, and numbers are shared by value between JavaScript and a foreign function. 
-  - ArrayBuffers/Buffers are shared by reference. Their allocated memories will be automatically released once their JavaScript consumer is out of scope.
-  - A string that's returned from a C function must be dynamically allocated. The allocated memory will be automatically released once the string has been passed to JavaScript.
+
+- Strings, booleans, and numbers are shared by value between JavaScript and a foreign function.
+- ArrayBuffers/Buffers are shared by reference. Their allocated memories will be automatically released once their JavaScript consumer is out of scope.
+- A string that's returned from a C function must be dynamically allocated. The allocated memory will be automatically released once the string has been passed to JavaScript.
 
 # License
 

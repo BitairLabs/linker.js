@@ -26,7 +26,7 @@ function link(libPath, functions) {
 
         let linker
         let [, libDir, libName] = libPath.match(LIB_PATH_PATTERN)
-        
+
         if (libName.endsWith('.so')) {
           linker = bindings('c_linker.node')
         } else if (libName.endsWith('.py')) {

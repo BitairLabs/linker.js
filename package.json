@@ -1,13 +1,13 @@
 {
   "name": "@bitair/linker.js",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Dynamic foreign library linker",
   "main": "src/index.js",
   "types": "src/index.d.ts",
   "scripts": {
     "clean": "sh scripts/clean.sh",
-    "format": "prettier --write '**/*.{js,ts,tsx,md,yaml}'",
-    "lint": "npx eslint .; pnpm -r --filter=./**/* lint",
+    "format": "prettier --write '**/*.{js,ts,tsx,md,yaml}' && clang-format -i --glob=*/**/*.{h,c,cpp}",
+    "lint": "eslint .",
     "build:c": "sh scripts/build.sh c_linker",
     "build:c:dev": "sh scripts/build.sh c_linker --debug",
     "build:py": "sh scripts/build.sh py_linker",
@@ -15,7 +15,8 @@
     "build": "npm run build:c && npm run build:py",
     "test:c": "sh scripts/build_test.sh && node ./test/c_linker/index.js",
     "test:py": "node ./test/py_linker/index.js",
-    "test": "npm run test:c && npm run test:py"
+    "test": "npm run test:c && npm run test:py",
+    "publish:dry": "npm publish --access public --dry"
   },
   "bin": {
     "linker.js": "./scripts/install.sh"
@@ -28,10 +29,11 @@
     "node-addon-api": "^6.0.0"
   },
   "devDependencies": {
+    "clang-format": "^1.8.0",
     "cmake-js": "^7.2.1",
     "eslint": "^8.39.0",
-    "prettier": "^2.8.8",
-    "eslint-config-prettier": "^8.6.0"
+    "eslint-config-prettier": "^8.6.0",
+    "prettier": "^2.8.8"
   },
   "repository": {
     "type": "git",
